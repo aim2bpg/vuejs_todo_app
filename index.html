@@ -33,20 +33,20 @@
       </thead>
 
       <tbody>
-        <tr v-for="item in computedTodos" v-bind:class="{done: item.state, editing: item === editedTodo}">
-          <td class="view" v-on:dblclick="doEdit(item)">{{ item.todo }}</td>
+        <tr v-for="todo in computedTodos" v-bind:class="{done: todo.state, editing: todo === editedTodo}">
+          <td class="view" v-on:dblclick="doEdit(todo)">{{ todo.content }}</td>
           <td class="edit"><input type="text"
-            v-model="item.todo"
-            v-on:keypress.enter="doneEdit(item)"
-            v-on:keyup.esc="cancelEdit(item)"
-            v-todo-focus="item === editedTodo"
-            v-on:blur="doneEdit(item)">
+            v-model="todo.content"
+            v-on:keypress.enter="doneEdit(todo)"
+            v-on:keyup.esc="cancelEdit(todo)"
+            v-todo-focus="todo === editedTodo"
+            v-on:blur="doneEdit(todo)">
           </td>
           <td class="state">
-            <button v-on:click="doChangeState(item)">{{ labels[item.state] }}</button>
+            <button v-on:click="doChangeState(todo)">{{ labels[todo.state] }}</button>
           </td>
           <td class="button">
-            <button v-on:click="doRemove(item)">削除</button>
+            <button v-on:click="doRemove(todo)">削除</button>
           </td>
         </tr>
       </tbody>
