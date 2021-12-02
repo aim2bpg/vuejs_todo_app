@@ -51,13 +51,13 @@ button {
   cursor: pointer;
 }
 tbody tr.editing .edit {
-	display: block;
+  display: block;
 }
 
 tbody tr.editing .view {
-	display: none;
+  display: none;
 }
 
 tbody tr .edit {
-	display: none;
+  display: none;
 }
