@@ -14,6 +14,7 @@ new Vue({
   el: '#app',
 
   data: {
+    content: '',
     todos: [],
     current: -1,
     options: [
@@ -51,19 +52,19 @@ new Vue({
   },
 
   methods: {
-    doAdd: function (event, value) {
-      const content = this.$refs.content
-      if (!content.value.length) {
+    add: function () {
+      const content = this.content
+      if (!content.length) {
         return
       }
       this.todos.push({
         id: todoStorage.uid++,
-        content: content.value,
+        content: content,
         state: 0
       })
-      content.value = ''
+      this.content = ''
     },
-    doEdit: function (todo) {
+    edit: function (todo) {
       this.beforeEditCache = todo.content
       this.editedTodo = todo
     },
@@ -76,17 +77,17 @@ new Vue({
       if (content) {
         todo.content = content
       } else {
-        this.doRemove(todo)
+        this.remove(todo)
       }
     },
     cancelEdit: function (todo) {
       this.editedTodo = null
       todo.content = this.beforeEditCache
     },
-    doChangeState: function (todo) {
+    changeState: function (todo) {
       todo.state = todo.state ? 0 : 1
     },
-    doRemove: function (todo) {
+    remove: function (todo) {
       const index = this.todos.indexOf(todo)
       this.todos.splice(index, 1)
     }

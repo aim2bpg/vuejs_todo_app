@@ -10,14 +10,14 @@
   <div id="app">
     <h1>ToDoリスト</h1>
 
-    <form class="add-form" v-on:submit.prevent="doAdd">
-      新規ToDo <input type="text" ref="content">
+    <form class="add-form" v-on:submit.prevent="add">
+      新規ToDo <input type="text" v-model="content">
       <button type="submit">追加</button>
     </form>
 
     <p></p>
 
-    <label v-for="option in options">
+    <label v-for="option in options" v-bind:key="option.value">
       <input type="radio" v-model="current" v-bind:value="option.value">{{ option.label }}
     </label>
 
@@ -33,8 +33,10 @@
       </thead>
 
       <tbody>
-        <tr v-for="todo in computedTodos" v-bind:class="{done: todo.state, editing: todo === editedTodo}">
-          <td class="view" v-on:dblclick="doEdit(todo)">{{ todo.content }}</td>
+        <tr v-for="todo in computedTodos"
+          v-bind:key="todo.id"
+          v-bind:class="{done: todo.state, editing: todo === editedTodo}">
+          <td class="view" v-on:dblclick="edit(todo)">{{ todo.content }}</td>
           <td class="edit"><input type="text"
             v-model="todo.content"
             v-on:keypress.enter="doneEdit(todo)"
@@ -43,10 +45,10 @@
             v-on:blur="doneEdit(todo)">
           </td>
           <td class="state">
-            <button v-on:click="doChangeState(todo)">{{ labels[todo.state] }}</button>
+            <button v-on:click="changeState(todo)">{{ labels[todo.state] }}</button>
           </td>
           <td class="button">
-            <button v-on:click="doRemove(todo)">削除</button>
+            <button v-on:click="remove(todo)">削除</button>
           </td>
         </tr>
       </tbody>
