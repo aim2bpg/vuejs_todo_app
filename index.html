@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>ToDoリスト</title>
+  <link rel="stylesheet" href="./main.css">
+</head>
+
+<body>
+  <div id="app">
+    <h1>ToDoリスト</h1>
+
+    <form class="add-form" v-on:submit.prevent="add">
+      新規ToDo <input type="text" v-model="content">
+      <button type="submit">追加</button>
+    </form>
+
+    <p></p>
+
+    <label v-for="option in options" v-bind:key="option.value">
+      <input type="radio" v-model="current" v-bind:value="option.value">{{ option.label }}
+    </label>
+
+    <p>{{ computedTodos.length }} 件を表示中</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th class="todo">ToDo</th>
+          <th class="state">状態</th>
+          <th class="button"></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr v-for="todo in computedTodos"
+          v-bind:key="todo.id"
+          v-bind:class="{done: todo.state, editing: todo === editedTodo}">
+          <td class="view" v-on:dblclick="edit(todo)">{{ todo.content }}</td>
+          <td class="edit"><input type="text"
+            v-model="todo.content"
+            v-on:keypress.enter="doneEdit(todo)"
+            v-on:keyup.esc="cancelEdit(todo)"
+            v-todo-focus="todo === editedTodo"
+            v-on:blur="doneEdit(todo)">
+          </td>
+          <td class="state">
+            <button v-on:click="changeState(todo)">{{ labels[todo.state] }}</button>
+          </td>
+          <td class="button">
+            <button v-on:click="remove(todo)">削除</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <script src="http://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+  <script src="./main.js"></script>
+</body>
+</html>
